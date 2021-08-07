@@ -1,0 +1,20 @@
+name: 'Build with Gradle'
+description: 'Composite step to build a given codebase using Gradle.'
+inputs:
+  build_directory:
+    description: 'Name of the component the function code resides in (./apps).'
+    required: true
+  version:
+    description: 'Build version of the function.'
+    required: false
+    default: v0.0.1-SNAPSHOT
+
+runs:
+  using: "composite"
+  steps:
+
+    - run: |
+        gradle build \
+          -P buildVersion=${{inputs.version}} \
+          -p ${{inputs.build_directory}}
+      shell: bash
